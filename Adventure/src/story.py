@@ -8,17 +8,22 @@ from pygame.locals import *
 
 
 def reproduce_parte(p_ant , keys):
-    if keys[K_a]:
+    cont = 0
+    if keys == pygame.K_a:
         r = "grabaciones/"+p_ant+"_1.ogg"
         aux = p_ant+"_1"
 
-    if keys[K_b]:
+    if keys == pygame.K_b:
         r = "grabaciones/"+p_ant+"_2.ogg"
         aux = p_ant+"_2"
         
-    if keys[K_c]:
+    if keys == pygame.K_c:
         r = "grabaciones/"+p_ant+"_3.ogg"
         aux = p_ant+"_3"
+
+    else:
+        r = "ggggg"
+        aux = "error"
 
     pygame.mixer.init()
 
@@ -29,6 +34,8 @@ def reproduce_parte(p_ant , keys):
     except:
         aux = "error"
 
+    while pygame.mixer.music.get_busy() == True:
+        cont = cont+1
 
     return aux
 
@@ -58,9 +65,12 @@ def reproduce_parte(p_ant , keys):
 
 
 def reproduccion_parte_inicial():
+    cont = 0
     pygame.mixer.init()
     pygame.mixer.music.load("grabaciones/parte1.ogg")
     pygame.mixer.music.play()
+    while pygame.mixer.music.get_busy() == True:
+        cont = cont+1
 
 
 
@@ -80,17 +90,16 @@ def main():
 
 
     while True:
-        keys = pygame.key.get_pressed()
-        
-        #opcion_anterior = reproduce_opcion(opcion_anterior , keys)
+        eventos = pygame.event.get()
+        for evento in eventos:
+            if evento.type == pygame.KEYDOWN:
+                parte_anterior = reproduce_parte(parte_anterior , evento.key)
+                print parte_anterior
+                #print "------"+str(keys)
+                if parte_anterior == "error":
+                    #deberia ir un mensaje de eror
+                    sys.exit(0)
 
-        while(keys[K_a] or keys[K_b] or keys[K_c]):
-            parte_anterior = reproduce_parte(parte_anterior , keys)
-            print parte_anterior
-            print "------"+str(keys)
-
-            if parte_anterior == "error":
-                sys.exit(0)
 
     return 0
 
