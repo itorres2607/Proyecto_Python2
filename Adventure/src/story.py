@@ -17,10 +17,6 @@ def reproduce_parte(p_ant , keys):
         r = "grabaciones/"+p_ant+"_2.ogg"
         aux = p_ant+"_2"
 
-    elif keys == pygame.K_c: #si aplasto la tecla c
-        r = "grabaciones/"+p_ant+"_3.ogg"
-        aux = p_ant+"_3"
-
     else:
         r = "ggggg"
         aux = "error"
@@ -67,8 +63,8 @@ def reproduccion_mensaje_error():
 
 
 
-#funcion que se encarga de controlar el accionar del usuario a través de la historia
-def main():
+
+def main(): 
     screen = pygame.display.set_mode((640,480))
     # se ejecuta una pantalla para mantener el foco del programa, ya que facilmente el usuario puede dar clic sin querer en otro lado y no se capturan los eventos de teclado
     reproduccion_parte_inicial()
@@ -84,8 +80,7 @@ def main():
                 if evento.key == pygame.K_q or evento.key == K_ESCAPE: # si fue la q o escape
                     sys.exit(0)
 
-                if evento.key == pygame.K_a or evento.key == pygame.K_b or evento.key == pygame.K_c:
-                # la historia tiene un máximo de 3 caminos todas las veces
+                if evento.key == pygame.K_a or evento.key == pygame.K_b:   
                     parte_anterior = reproduce_parte(parte_anterior , evento.key)
                     # reproduzco y recupero la parte que se esta reproduciendo
                     if parte_anterior == "error":
